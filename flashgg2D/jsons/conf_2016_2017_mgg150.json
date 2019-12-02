@@ -1,0 +1,46 @@
+{
+    "LTDIR" : "/afs/cern.ch/work/l/lata/public/HH_bbyy/merged_2016_n_2017/LT_OutDir_2D_withPU",
+    "RooFitTemplateName" : "templates/models_2D_higgs_mjj70",
+    "ncat" : 12,
+    "doDoubleSidedCB": 1,
+    "energy" : "13TeV",
+    "higgsMass" : 125.0,
+    "addHiggs" : 1,
+    "scaleSingleHiggs" : 0,
+    "doBlinding" : 1,
+    "doBands" : 0,
+    "fitStrategy" : 2,
+    "doSingleLimit" : 0,
+    "useSigTheoryUnc" : 0,
+    "runCombine" : 0,
+    "combineOption" : 4,
+    "minMggMassFit" : 100,
+    "maxMggMassFit" : 150,
+    "minMjjMassFit" : 70,
+    "maxMjjMassFit" : 190,
+    "minSigFitMgg" :115,
+    "maxSigFitMgg" :135,
+    "minSigFitMjj" :70,
+    "maxSigFitMjj" :190,
+    "minHigMggFit" :115,
+    "maxHigMggFit" :135,
+    "minHigMjjFit":70,
+    "maxHigMjjFit":190,
+    "HH":false,
+    "base":true,
+    "low":false,
+    "obs":false,
+
+    "data" : {
+        "name" :"DoubleEG"
+    },
+    "higgs" : {
+	"type" : {
+		"vbf": "VBFHToGG_M-125_13TeV_powheg_pythia8",
+		"bbh": "bbHToGG_M-125_13TeV_amcatnlo",
+		"ggh": "GluGluHToGG_M-125_13TeV_powheg_pythia8",
+		"tth": "ttHToGG_M125_13TeV_powheg_pythia8",
+		"vh" : "VHToGG_M125_13TeV_amcatnloFXFX_madspin_pythia8"
+		}
+    }
+}

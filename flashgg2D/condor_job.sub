@@ -1,0 +1,13 @@
+Universe   = vanilla
+Executable = scripts/RunBias_jobs.sh
+Arguments  = $(DIR) $(Item) $(Step)
+Log        = output/jobs.cat$(Item).fun$(Step).$(ClusterId).log
+Output     = output/jobs.cat$(Item).fun$(Step).$(ClusterId).out
+Error      = output/jobs.cat$(Item).fun$(Step).$(ClusterId).error
++JobFlavour= "longlunch"
+WhenToTransferOutput  = ON_EXIT_OR_EVICT
+transfer_output_files = ""
+Queue 3 in (0, 1, 2, 3)
+
+
+### condor_submit condor_job.sub DIR=directory_name ######
