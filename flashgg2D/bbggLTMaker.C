@@ -19,8 +19,17 @@ const Float_t boundary_MVA_tagger2017_HM[3] = {0.226, 0.6195, 1.0};
 //const Float_t boundary_MX_2017[5]  = {250, 341.4, 426.1, 544, 35000};
 
 //// upating the categrisation number according to this part of 2017 analysis code https://github.com/michelif/flashgg/blob/hh_tag_94X_20180601/Taggers/python/flashggDoubleHTag_cfi.py#L31-L34
-const Float_t boundary_MVA_2017[4]   = {0.29, 0.441, 0.724, 1.0}; // category boundaries for MVA
-const Float_t boundary_MX_2017[5]   = {250., 354., 478., 560., 35000};// .. and MX
+//const Float_t boundary_MVA_2017[4]   = {0.29, 0.441, 0.724, 1.0}; // category boundaries for MVA
+//const Float_t boundary_MX_2017[5]   = {250., 354., 478., 560., 35000};// .. and MX
+
+// From Ivan Ovtin for 2016+2017
+const Float_t boundary_MVA_2017[4]   = {0.267, 0.465, 0.718, 1.0}; // category boundaries for MVA
+const Float_t boundary_MX_2017[5]  = {250., 357., 478., 574., 35000}; // category for MX
+
+// From Ivan Ovtin for 2016+2017+2018
+////const Float_t boundary_MVA_2017[4]   = {0.283, 0.524, 0.717, 1.0}; // category boundaries for MVA
+////const Float_t boundary_MX_2017[5]  = {250., 360., 417., 663., 35000}; // category for MX
+
 
 //const Float_t MjjCuts_Low[] = {97.,95.,95.,95.,99.,100.,95.,95.,95.,95.,95.,108.};
 
@@ -163,17 +172,17 @@ Bool_t bbggLTMaker::Process(Long64_t entry)
 
   else if (_whichCategorization==2 || _whichCategorization==3){
     if (o_MX > boundary_MX_2017[0] && o_MX <= boundary_MX_2017[1]){
-      if (HHbbggMVA > boundary_MVA_2017[0] && HHbbggMVA <= boundary_MVA_2017[1]){
+      if (MVAOutputTransformed > boundary_MVA_2017[0] && MVAOutputTransformed <= boundary_MVA_2017[1]){
 	o_catID = 11;
 	if (_whichCategorization==3 && (o_mjj < MjjCuts_Low[o_catID] || o_mjj > MjjCuts_High[o_catID]) )
 	  return kTRUE;
       }
-      else if (HHbbggMVA > boundary_MVA_2017[1] && HHbbggMVA <= boundary_MVA_2017[2]){
+      else if (MVAOutputTransformed > boundary_MVA_2017[1] && MVAOutputTransformed <= boundary_MVA_2017[2]){
 	o_catID = 7;
 	if (_whichCategorization==3 && (o_mjj < MjjCuts_Low[o_catID] || o_mjj > MjjCuts_High[o_catID]) )
 	  return kTRUE;
       }
-      else if (HHbbggMVA > boundary_MVA_2017[2] && HHbbggMVA <= boundary_MVA_2017[3]){
+      else if (MVAOutputTransformed > boundary_MVA_2017[2] && MVAOutputTransformed <= boundary_MVA_2017[3]){
         o_catID = 3;
         if (_whichCategorization==3 && (o_mjj < MjjCuts_Low[o_catID] || o_mjj > MjjCuts_High[o_catID]) )
           return kTRUE;
@@ -184,17 +193,17 @@ Bool_t bbggLTMaker::Process(Long64_t entry)
     }
 
     else if (o_MX > boundary_MX_2017[1] && o_MX <= boundary_MX_2017[2]){
-      if (HHbbggMVA > boundary_MVA_2017[0] && HHbbggMVA <= boundary_MVA_2017[1]){
+      if (MVAOutputTransformed > boundary_MVA_2017[0] && MVAOutputTransformed <= boundary_MVA_2017[1]){
 	o_catID = 10;
 	if (_whichCategorization==3 && (o_mjj < MjjCuts_Low[o_catID] || o_mjj > MjjCuts_High[o_catID]) )
 	  return kTRUE;
       }
-      else if (HHbbggMVA > boundary_MVA_2017[1] && HHbbggMVA <= boundary_MVA_2017[2]){
+      else if (MVAOutputTransformed > boundary_MVA_2017[1] && MVAOutputTransformed <= boundary_MVA_2017[2]){
 	o_catID = 6;
 	if (_whichCategorization==3 && (o_mjj < MjjCuts_Low[o_catID] || o_mjj > MjjCuts_High[o_catID]) )
 	  return kTRUE;
       }
-      else if (HHbbggMVA > boundary_MVA_2017[2] && HHbbggMVA <= boundary_MVA_2017[3]){
+      else if (MVAOutputTransformed > boundary_MVA_2017[2] && MVAOutputTransformed <= boundary_MVA_2017[3]){
         o_catID = 2;
         if (_whichCategorization==3 && (o_mjj < MjjCuts_Low[o_catID] || o_mjj > MjjCuts_High[o_catID]) )
           return kTRUE;
@@ -205,17 +214,17 @@ Bool_t bbggLTMaker::Process(Long64_t entry)
     }
 
     else if (o_MX > boundary_MX_2017[2] && o_MX <= boundary_MX_2017[3]){
-      if (HHbbggMVA > boundary_MVA_2017[0] && HHbbggMVA <= boundary_MVA_2017[1]){
+      if (MVAOutputTransformed > boundary_MVA_2017[0] && MVAOutputTransformed <= boundary_MVA_2017[1]){
 	o_catID = 9;
 	if (_whichCategorization==3 && (o_mjj < MjjCuts_Low[o_catID] || o_mjj > MjjCuts_High[o_catID]) )
 	  return kTRUE;
       }
-      else if (HHbbggMVA > boundary_MVA_2017[1] && HHbbggMVA <= boundary_MVA_2017[2]){
+      else if (MVAOutputTransformed > boundary_MVA_2017[1] && MVAOutputTransformed <= boundary_MVA_2017[2]){
 	o_catID = 5;
 	if (_whichCategorization==3 && (o_mjj < MjjCuts_Low[o_catID] || o_mjj > MjjCuts_High[o_catID]) )
 	  return kTRUE;
       }
-      else if (HHbbggMVA > boundary_MVA_2017[2] && HHbbggMVA <= boundary_MVA_2017[3]){
+      else if (MVAOutputTransformed > boundary_MVA_2017[2] && MVAOutputTransformed <= boundary_MVA_2017[3]){
         o_catID = 1;
         if (_whichCategorization==3 && (o_mjj < MjjCuts_Low[o_catID] || o_mjj > MjjCuts_High[o_catID]) )
           return kTRUE;
@@ -226,17 +235,17 @@ Bool_t bbggLTMaker::Process(Long64_t entry)
     }
     
     else if (o_MX > boundary_MX_2017[3] && o_MX <= boundary_MX_2017[4]){
-      if (HHbbggMVA > boundary_MVA_2017[0] && HHbbggMVA <= boundary_MVA_2017[1]){
+      if (MVAOutputTransformed > boundary_MVA_2017[0] && MVAOutputTransformed <= boundary_MVA_2017[1]){
 	o_catID = 8;
 	if (_whichCategorization==3 && (o_mjj < MjjCuts_Low[o_catID] || o_mjj > MjjCuts_High[o_catID]) )
 	  return kTRUE;
       }
-      else if (HHbbggMVA > boundary_MVA_2017[1] && HHbbggMVA <= boundary_MVA_2017[2]){
+      else if (MVAOutputTransformed > boundary_MVA_2017[1] && MVAOutputTransformed <= boundary_MVA_2017[2]){
 	o_catID = 4;
 	if (_whichCategorization==3 && (o_mjj < MjjCuts_Low[o_catID] || o_mjj > MjjCuts_High[o_catID]) )
 	  return kTRUE;
       }
-      else if (HHbbggMVA > boundary_MVA_2017[2] && HHbbggMVA <= boundary_MVA_2017[3]){
+      else if (MVAOutputTransformed > boundary_MVA_2017[2] && MVAOutputTransformed <= boundary_MVA_2017[3]){
         o_catID = 0;
         if (_whichCategorization==3 && (o_mjj < MjjCuts_Low[o_catID] || o_mjj > MjjCuts_High[o_catID]) )
           return kTRUE;
