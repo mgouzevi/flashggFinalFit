@@ -1,6 +1,10 @@
 ## Limit trees
 
 * Make the small limit trees from large fat trees obtained from flashgg:
+the samples are described here
+https://docs.google.com/spreadsheets/d/1nAMnNzMiREAaep6NCIyHVvMXSPHTZ2T7pfh6pxmcXXA/edit#gid=1146044152
+and the flat trees
+/eos/cms/store/group/phys_higgs/HiggsExo/HH_bbgg/Run2_legacy/flat_trees_from_ETH_MVA_10_12_2018_commonTraining/
 
 ```
 ./makeLT.py /eos/cms/store/group/phys_higgs/resonant_HH/RunII/FlatTrees/2016/2018_05_04_HHTaggerETH/ -x nonres -o LT_OutDir [-c Y]
