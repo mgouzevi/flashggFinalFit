@@ -1,5 +1,5 @@
 #define bbgg2DFitter_cxx
-#include "HiggsAnalysis/bbggLimits2018/interface/bbgg2DFitter.h"
+#include "flashggFinalFit/flashgg2D/interface/bbgg2DFitter.h"
 std::ofstream newCout;
 
 void bbgg2DFitter::Initialize(RooWorkspace* workspace, Int_t SigMass, float Lumi,std::string folder_name,
