@@ -44,7 +44,7 @@ protected:
 
   Double_t evaluate() const;
 
-  //ClassDef(RooPowerLawSum,1) // PowerLaw PDF
+//  ClassDef(RooPowerLawSum,1) // PowerLaw PDF
 //  not neded for cmssw 7xx ?
 };
 

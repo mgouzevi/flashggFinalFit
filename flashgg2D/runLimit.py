@@ -173,7 +173,7 @@ def runFullChain(opt, Params, point=None, NRgridPoint=-1, extraLabel=''):
 
   SignalFile = "/LT_output_GluGluToHHTo2B2G_node_"+str(point)+"_13TeV-madgraph.root"
   if "LT_StrikeBack" in LTDir or "MadMax" in LTDir or "ttH" in LTDir:
-      SignalFile = "/LT_output_GluGluToHHTo2B2G_node_"+str(point)+"_13TeV-madgraph.root"
+      SignalFile = "/LT_output_GluGluToHHTo2B2G_node_"+str(point)+"_13TeV-madgraph_0.root"
   if isRes:
     SignalFile = "/LT_output_GluGluToTYPEToHHTo2B2G_M-"+str(point)+"_narrow_13TeV-madgraph.root"
     if "RES_Mar21" in LTDir:
@@ -297,9 +297,7 @@ def runFullChain(opt, Params, point=None, NRgridPoint=-1, extraLabel=''):
   if opt.verb>1:
     theFitter.PrintWorkspace();
 
-  fitresults = theFitter.BkgModelFit()
-  wsMultipdfFileBkgName = "ws_hhbbgg.data_bkg_multipdf"
-  theFitter.BkgMultiModelFit(wsMultipdfFileBkgName)
+  fitresults = theFitter.BkgModelFit( doBands, addHiggs)
   mainLog.info("\t BKG FITTED. Node=%r, GridPoint=%r", point,NRgridPoint)
   if opt.verb>0: p5 = printTime(p4,start,mainLog)
   if fitresults==None:
@@ -340,7 +338,6 @@ def runFullChain(opt, Params, point=None, NRgridPoint=-1, extraLabel=''):
     DataCardMaker(str(myLoc), NCAT, sigExp, bkgObs, isRes)
   else:
     DataCardMaker_wHiggs(str(myLoc), NCAT, sigExp, bkgObs, higgsExp, mainLog)
-    DataCardMaker_bias(str(myLoc), NCAT, sigExp, bkgObs, mainLog)
 
   mainLog.info("\t DATACARD DONE. Node/Mass=%r, GridPoint=%r", point,NRgridPoint)
   if opt.verb>0: p7 = printTime(p6,start,mainLog)

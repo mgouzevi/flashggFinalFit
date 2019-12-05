@@ -34,7 +34,8 @@
 #include "RooRealVar.h"
 #include "RooArgList.h"
 
-//ClassImp(RooExponentialSum);
+//ClassImp(RooExponentialSum)
+//;
 
 
 //_____________________________________________________________________________

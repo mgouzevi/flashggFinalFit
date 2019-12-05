@@ -15,8 +15,6 @@
 #include "RooWorkspace.h"
 #include "TFile.h"
 
-#include "HiggsAnalysis/CombinedLimit/interface/RooBernsteinFast.h"
-
 using namespace std;
 using namespace RooFit;
 

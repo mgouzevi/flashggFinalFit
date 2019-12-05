@@ -18,10 +18,8 @@ def MakeFullBackgroundPdf(bkg_pdf, bkg_norm, hig_pdfs, hig_norms):
 #    hig_pdfs[hh].Print()
     argPdfs.add(hig_pdfs[hh])
     argNorms.add(hig_norms[hh])
-
-  argNorms.Print()
-  argPdfs.Print()
-
+#  argNorms.Print()
+#  argPdfs.Print()
   if argNorms.getSize() != argPdfs.getSize():
     print 'ArgNorms and ArgPdfs have different sizes!'
     return None
@@ -54,28 +52,24 @@ parser.add_argument('-c', '--cat', dest="category", type=int, default=None, requ
 parser.add_argument('-L', '--lumi', dest='lumi', type=str, default='3000')
 parser.add_argument('-Sf', '--signalFactor', dest='fsignal', type=float, default=[10.0,10.0], nargs='+')
 parser.add_argument('-u', '--unblind', dest='unblind', default=False, action='store_true')
-parser.add_argument('-n', '--ndims', dest='ndims', type=int, default=2)
 
 opt = parser.parse_args()
 
 
 Higgses = ['ggh', 'vbf', 'tth', 'vh', 'bbh']
 
-dims = ['mgg', 'mjj']
+dims = ['mjj', 'mgg']
 
-if opt.ndims == 1:
-  dims = ['mgg']
-
-bin = [40, 20]
-minval = [100, 94]
-maxval = [180, 190]
+bin = [20, 25]
+minval = [94, 105]
+maxval = [190, 145]
 
 hig_pdfs = []
 hig_norms = []
 totHiggs = 0
 
-xtitle = ['m_{#gamma#gamma} [GeV]', 'm_{jj} [GeV]']
-ytitle = ['Events/(2 GeV)', 'Events/(5 GeV)']
+xtitle = ['m_{jj} [GeV]', 'm_{#gamma#gamma} [GeV]']
+ytitle = ['Events/(5 GeV)', 'Events/(2 GeV)']
 Cats = ["HP, 560 GeV < M_{X}", "HP, 478 < M_{X} < 560 GeV",  "HP, 354 < M_{X} < 478 GeV",  "HP, 250 < M_{X} < 354 GeV", "MP, 560 GeV < M_{X}", "MP, 478 < M_{X} < 560 GeV",  "MP, 354 < M_{X} < 478 GeV",  "MP, 250 < M_{X} < 354 GeV", "LP, 560 GeV < M_{X}", "LP, 478 < M_{X} < 560 GeV",  "LP, 354 < M_{X} < 478 GeV",  "LP, 250 < M_{X} < 354 GeV"]
 
 
@@ -92,6 +86,8 @@ icat = opt.category
 for iobs,obs in enumerate(dims):
 
   var = w_all.var(obs)
+  data_cat = w_all.obj('CMS_channel')
+  data_cat.setRange("catcut","ch"+str(icat+1))
   var.Print()
 
 #  sig_pdf_name = obs+'Sig_cat'+str(icat)+'_CMS_sig_cat'+str(icat)
@@ -102,6 +98,33 @@ for iobs,obs in enumerate(dims):
 #  print sig_pdf_name
 #  sig_pdf.Print()
 #  print "@@@ sig_norm: %.1f including SF: %.1f" % (sig_norm.getVal(), opt.fsignal[iobs])
+
+
+  bkg_pdf_name = obs+'BkgTmpBer1_cat'+str(icat)+'_CMS_Bkg_cat'+str(icat)
+  bkg_pdf = w_all.pdf(bkg_pdf_name)
+  bkg_normName = 'n_exp_final_bincat'+str(icat)+'_proc_Bkg'
+  bkg_norm = RooRealVar('bkg_norm', 'nonres bkg norm', w_all.obj(bkg_normName).getVal())
+
+  print bkg_pdf_name 
+  bkg_pdf.Print()
+
+
+  for hh in Higgses:
+    hig_pdf_name = obs+'Hig_'+hh+'_cat'+str(icat)+'_CMS_hig_'+hh+'_cat'+str(icat)
+    hig_pdf = w_all.pdf(hig_pdf_name)
+    hig_pdfs.append(hig_pdf)
+
+    hig_normName = 'n_exp_bincat'+str(icat)+'_proc_'+hh
+    print hig_normName
+    hig_norm = RooRealVar(hh+'_norm', hh+' bkg norm', w_all.obj(hig_normName).getVal() )
+    hig_norms.append(hig_norm)
+    print hig_pdf_name, " ", hig_norm.getVal()
+    totHiggs += w_all.obj(hig_normName).getVal()
+
+  totBkg_pdf = MakeFullBackgroundPdf(bkg_pdf, bkg_norm, hig_pdfs, hig_norms)
+  totBkg_norm =  RooRealVar("totBkg_norm", "Normaisation of the total background",totHiggs + bkg_norm.getVal())
+
+  print "============================== totBkgNorm = ",  totBkg_norm.getVal()
 
 
  # model = MakeFullModelPdf(sig_pdf, sig_norm, totBkg_pdf, totBkg_norm)
@@ -121,66 +144,6 @@ for iobs,obs in enumerate(dims):
   data = data2d.reduce(RooFit.CutRange('catcut'))
 
   data.Print()
-
-
-
-#  w_all.Print()
-  bkg_pdf_name = "CMS_bkg_"+obs+"_cat"+str(icat)+"_bern1"
-
-  bkg_pdf = w_all.pdf(bkg_pdf_name)
-  if not bkg_pdf:
-     bkg_pdf_name = "CMS_bkg_"+obs+"_cat"+str(icat)+"_bern2"
-     bkg_pdf = w_all.pdf(bkg_pdf_name)
-     if not bkg_pdf:
-       bkg_pdf_name = "CMS_bkg_"+obs+"_cat"+str(icat)+"_bern3"
-       bkg_pdf = w_all.pdf(bkg_pdf_name)
-
-  bkg_normName = 'n_exp_final_bincat'+str(icat)+'_proc_Bkg'
-  bkg_norm = RooRealVar('bkg_norm', 'nonres bkg norm', w_all.obj(bkg_normName).getVal())
-
-  print bkg_pdf_name 
-  bkg_pdf.Print()
-
-  nBkgParams = bkg_pdf.getParameters(data).getSize()
-  print "Number of background parameters:", nBkgParams
-  bkg_pdf.getParameters(data).Print("v")
-  print "Normalisation ", w_all.obj(bkg_normName).getVal() 
-
-  par_name= obs+"_p0amp_cat"+str(icat)+"_CMS_Bkg_cat"+str(icat)
-  p0amp =  w_data.function(par_name)
-
-  func_name="bern_1par_cat"+str(icat)
-  ext_func_name="ext_bern_1par_cat"+str(icat)
-
-  bkg_pdf_1par = RooBernstein(func_name,"",var,RooArgList(p0amp));
-  ext_bkg_pdf_1par  = RooExtendPdf(ext_func_name, "",  bkg_pdf_1par, bkg_norm);
-
-#  print "name of the parameter = ", par_name
-#  p0amp.Print("v") 
-
-  for hh in Higgses:
-    hig_pdf_name = obs+'Hig_'+hh+'_cat'+str(icat)+'_CMS_hig_'+hh+'_cat'+str(icat)
-    
-    if opt.ndims == 1:
-      hig_pdf_name = 'shapeBkg_' + hh + '_cat'+str(icat)
-
-    hig_pdf = w_all.pdf(hig_pdf_name)
-    hig_pdfs.append(hig_pdf)
-
-    hig_normName = 'n_exp_bincat'+str(icat)+'_proc_'+hh
-    print hig_normName
-    hig_norm = RooRealVar(hh+'_norm', hh+' bkg norm', w_all.obj(hig_normName).getVal() )
-    hig_norms.append(hig_norm)
-    print hig_pdf_name, " ", hig_norm.getVal()
-    totHiggs += w_all.obj(hig_normName).getVal()
-
-  totBkg_pdf = MakeFullBackgroundPdf(bkg_pdf, bkg_norm, hig_pdfs, hig_norms)
-  totBkg_norm =  RooRealVar("totBkg_norm", "Normaisation of the total background",totHiggs + bkg_norm.getVal())
-
-  print "============================== totBkgNorm = ",  totBkg_norm.getVal()
-
-
-
 
 
   binning = bin[iobs]
@@ -220,7 +183,7 @@ for iobs,obs in enumerate(dims):
     data.plotOn(frame,RooFit.DataError(RooAbsData.SumW2),RooFit.XErrorSize(0))
     
 
-#  ext_bkg_pdf_1par.plotOn(frame,RooFit.LineColor(cNiceRed), RooFit.LineStyle(kDashed), RooFit.Precision(1E-5), RooFit.Normalization(bkg_norm.getVal(), RooAbsReal.NumEvent))
+  
   bkg_pdf.plotOn(frame,RooFit.LineColor(cNiceGreenDark), RooFit.LineStyle(kDashed), RooFit.Precision(1E-5), RooFit.Normalization(bkg_norm.getVal(), RooAbsReal.NumEvent))
   totBkg_pdf.plotOn(frame,RooFit.LineColor(cNiceBlueDark),RooFit.Precision(1E-5), RooFit.Normalization(totBkg_norm.getVal(), RooAbsReal.NumEvent))
 
@@ -259,7 +222,7 @@ for iobs,obs in enumerate(dims):
   leg.Draw('same')
   SetPadStyle(c)
   SetAxisTextSizes(frame)
-  DrawCMSLabels(c, opt.lumi)
+  DrawCMSLabels(c, '41.5')
   DrawCatLabels(c, Cats[icat])
   c.Update()
 

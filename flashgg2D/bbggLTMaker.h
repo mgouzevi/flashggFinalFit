@@ -26,7 +26,7 @@ public :
    TTree *_outTree;
 
    Double_t o_weight;
-   Double_t o_mgg, o_mjj, o_bbggMass, o_MX, o_ttHTagger;
+   Double_t o_mgg, o_mjj, o_bbggMass, o_MX;
    Int_t o_catID;
    UInt_t o_run;
    ULong64_t o_evt;
@@ -34,7 +34,6 @@ public :
    // Some external variables:
    Double_t _normalization;
    Bool_t _genDiPhotonFilter;
-   Bool_t _ttHTagger;
    Int_t _whichCategorization;
    //Photon ID SF stuff
    TFile* photonidFile;
@@ -58,7 +57,6 @@ public :
    Float_t         weight;
    Int_t           isSignal;
    Double_t        genTotalWeight;
-   Float_t         ttHScore;
    Float_t         CMS_hgg_mass;
    Float_t         dZ;
    Float_t         centralObjectWeight;
@@ -151,7 +149,7 @@ public :
    TBranch        *b_HHTagger_HM;   //!
 
    TBranch        *b_MX;   //!
-   TBranch        *b_ttHTagger;
+
    //TBranch        *b_nelecs;   //!
    //TBranch        *b_nelecs_loose;   //!
    //TBranch        *b_rho;   //!
@@ -212,8 +210,8 @@ void bbggLTMaker::Init(TTree *tree)
    // Set branch addresses and branch pointers
    if (!tree) return;
    fChain = tree;
-   //fChain->SetBranchAddress("leadingJet_DeepCSV", &leadingJet_DeepCSV, &b_leadingJet_bDis);
-   //fChain->SetBranchAddress("subleadingJet_DeepCSV", &subleadingJet_DeepCSV, &b_subleadingJet_bDis);
+   fChain->SetBranchAddress("leadingJet_bDis", &leadingJet_bDis, &b_leadingJet_bDis);
+   fChain->SetBranchAddress("subleadingJet_bDis", &subleadingJet_bDis, &b_subleadingJet_bDis);
    fChain->SetBranchAddress("MX", &MX, &b_MX);
    fChain->SetBranchAddress("event", &event, &b_event);
    fChain->SetBranchAddress("HHbbggMVA", &HHbbggMVA, &b_HHbbggMVA);
@@ -222,7 +220,6 @@ void bbggLTMaker::Init(TTree *tree)
    fChain->SetBranchAddress("CMS_hgg_mass", &CMS_hgg_mass, &b_Mgg);
    fChain->SetBranchAddress("diHiggs_mass", &diHiggs_mass, &b_mbbgg);
    fChain->SetBranchAddress("weight", &weight, &b_evWeight);
-   fChain->SetBranchAddress("ttHScore", &ttHScore, &b_ttHTagger);
 }
 
 Bool_t bbggLTMaker::Notify()

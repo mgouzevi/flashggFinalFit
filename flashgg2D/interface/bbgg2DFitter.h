@@ -15,7 +15,7 @@
 #include <TTree.h>
 #include <TH1F.h>
 #include <TH2F.h>
-
+#include "PdfModelBuilder.h"
 // RooFit headers
 #include <RooWorkspace.h>
 #include <RooFitResult.h>
@@ -23,7 +23,6 @@
 #include <RooCategory.h>
 #include <RooArgSet.h>
 #include "RooStats/HLFactory.h"
-#include "PdfModelBuilder.h"
 #include <RooDataSet.h>
 #include <RooFormulaVar.h>
 #include <RooGenericPdf.h>
@@ -36,11 +35,10 @@
 #include <RooMsgService.h>
 #include <RooProdPdf.h>
 #include <RooExponential.h>
+#include "RooExponentialSum.h"
+#include "RooPowerLaw.h" 
 #include <RooPolynomial.h>
 #include <RooMoment.h>
-
-
-#include "HiggsAnalysis/CombinedLimit/interface/RooMultiPdf.h"
 
 // namespaces
 //using namespace std;
@@ -118,10 +116,9 @@ class bbgg2DFitter {
    void AddBkgData(TString datafile); 
    void SigModelFit(float mass); 
    void HigModelFit(float mass, int higgschannel, TString higName); 
-   RooFitResult* BkgModelFit(); 
-   void BkgMultiModelFit(std::string fileBaseName);
-   //   RooFitResult* BkgModelFit(Bool_t m,bool h,std::vector<std::string>higgstrue,std::map<std::string,int>higgsNumber) {
-   //     return BkgModelFit();} 
+   RooFitResult* BkgModelFit(Bool_t m,bool h); 
+   RooFitResult* BkgModelFit(Bool_t m,bool h,std::vector<std::string>higgstrue,std::map<std::string,int>higgsNumber) {
+     return BkgModelFit(m, h);} 
    void SetFitStrategy( int st) { _fitStrategy = st; }
    void MakeSigWS(std::string filename); 
    void MakeHigWS(std::string filename, int higgschannel, TString higName); 

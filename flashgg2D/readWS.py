@@ -7,7 +7,7 @@ from ROOT import *
 gROOT.SetBatch()
 
 # Read the workspaces:
-rooWs = TFile('2016_2017_withPU_BerFast_2D_FORBIAS_BER3All/Node_SM/ws_hhbbgg.HH.sig.mH125_13TeV.root')
+rooWs = TFile('LIMS_OutDir_Train_23_11_18/Node_SM/ws_hhbbgg.HH.sig.mH125_13TeV.root')
 
 myWs = rooWs.Get('w_all')
 myWs.Print()

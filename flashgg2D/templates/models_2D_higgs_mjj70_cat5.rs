@@ -1,3 +1,7 @@
+CMS_hhbbgg_13TeV_mgg_bkg_par1_cat5[0.9, -1000, 1000];
+CMS_hhbbgg_13TeV_mgg_bkg_par2_cat5[0.5, -1000, 1000];
+CMS_hhbbgg_13TeV_mgg_bkg_par3_cat5[0.5, -1000, 1000];
+
 mgg_sig_m0_cat5[125., 122, 127];
 mgg_sig_sigma_cat5[1.0, 0.1, 3.0];
 mgg_sig_alpha1_cat5[1.0, 0.05, 10.0];
@@ -54,6 +58,10 @@ mjj_sig_n1_cat5[2.0, 0.1, 10.0];
 mjj_sig_alpha2_cat5[1.0, 0.05, 10.0];
 mjj_sig_n2_cat5[2.0, 0.1, 10.0];
 mjjSig_cat5 = RooDoubleCB(mjj, mjj_sig_m0_cat5, mjj_sig_sigma_cat5, mjj_sig_alpha1_cat5, mjj_sig_n1_cat5, mjj_sig_alpha2_cat5, mjj_sig_n2_cat5);
+
+CMS_hhbbgg_13TeV_mjj_bkg_par1_cat5[0.9, -1000, 1000];
+CMS_hhbbgg_13TeV_mjj_bkg_par2_cat5[0.5, -1000, 1000];
+CMS_hhbbgg_13TeV_mjj_bkg_par3_cat5[0.5, -1000, 1000];
 
 mjj_hig_par1_ggh_cat5[0.1, 0, 10];
 mjj_hig_par2_ggh_cat5[0.1, 0, 10];

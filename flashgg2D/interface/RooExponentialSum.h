@@ -28,7 +28,7 @@ public:
   RooExponentialSum() ;
   RooExponentialSum(const char* name, const char* title, RooAbsReal& x) ;
   RooExponentialSum(const char *name, const char *title,
-		 RooAbsReal& _x, const RooArgList& coefList);
+		 RooAbsReal& _x, const RooArgList& _coefList);
 
   RooExponentialSum(const RooExponentialSum& other, const char* name=0);
   virtual TObject* clone(const char* newname) const { return new RooExponentialSum(*this,newname); }

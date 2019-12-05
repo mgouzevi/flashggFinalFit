@@ -119,7 +119,7 @@ def DataCardMaker_wHiggs(Folder, nCats, signalExp, observed, higgsExp, log):
 
   combo = combo + " > " + combCard
 
-#  log.info("========= ", combo)
+  log.info("========= ", combo)
   
   os.system(combo)
 
@@ -128,33 +128,6 @@ def DataCardMaker_wHiggs(Folder, nCats, signalExp, observed, higgsExp, log):
   strReplace = Folder+'/'+os.getenv("CMSSW_BASE")+'/src/HiggsAnalysis/bbggLimits2018/'
   os.system("sed -i 's|"+strReplace+"||g' "+combCard)
   # print strReplace
-
-def DataCardMaker_bias(Folder, nCats, signalExp, observed, log):
-  # Need to loop over categories here
-
-  for n in range(nCats):
-    # print "Making card for cat", n
-    inputDatacardName = os.getenv("CMSSW_BASE")+'/src/HiggsAnalysis/bbggLimits2018/templates/NonResDatacardTemplate_bias.txt'
-
-    outToWrite=''
-    with open(inputDatacardName, 'r') as cardTemp:
-      outToWrite = cardTemp.read()
-
-      outToWrite = outToWrite.replace("INPUTBKGLOC", 'ws_hhbbgg.data_bkg.root')
-      outToWrite = outToWrite.replace("INPUTBKGMULTLOC", 'ws_hhbbgg.data_bkg_multipdf.root')
-      outToWrite = outToWrite.replace("INPUTSIGLOC", 'ws_hhbbgg.HH.sig.mH125_13TeV.root')
-
-      ##observed
-      outToWrite = outToWrite.replace("OBS", '%.1f' % observed[n])
-      #print outToWrite
-      ##expected signal
-      outToWrite = outToWrite.replace("SIG", '%.5f' % signalExp[n])
-      outToWrite = outToWrite.replace("ICAT", 'cat%d' % n)
-
-      with open(Folder+'/hhbbgg_13TeV_DataCard_bias_cat'+str(n)+'.txt', 'w') as outputDatacard:
-        outputDatacard.write(outToWrite)
-        
-
 
 if __name__ == "__main__":
   print "This is the __main__ part"
